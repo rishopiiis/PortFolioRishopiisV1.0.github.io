@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rishopika Seyaruban | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0b0e14;
+            --bg-card: #151b25;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #00d4ff;
+            --accent-glow: rgba(0, 212, 255, 0.4);
+            --secondary: #702df5;
+            --border-color: rgba(255,255,255,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        #canvas-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        h1, h2, h3, h4 { font-weight: 700; letter-spacing: 0.5px; }
+        p { line-height: 1.7; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(11, 14, 20, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+        }
+        
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { font-size: 0.9rem; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links a:hover { color: var(--accent); }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        /* FIXED: Added z-index to ensure clicks work */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content h2 {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .typewriter {
+            color: var(--accent);
+            font-weight: bold;
+            border-right: 2px solid var(--accent);
+            padding-right: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        .btn-group { margin-top: 30px; }
+        .btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 0 10px;
+            position: relative;
+            overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--accent);
+            color: var(--accent);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--accent);
+            color: #000;
+        }
+
+        section { padding: 80px 0; }
+        
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .card-header { margin-bottom: 15px; }
+        .card h3 { color: var(--text-main); margin-bottom: 5px; font-size: 1.3rem; }
+        .card .role { color: var(--accent); font-size: 0.85rem; display: block; margin-bottom: 10px; }
+        .card p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; }
+        
+        .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent);
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--border-color);
+        }
+        .timeline-item {
+            padding-left: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 14px;
+            height: 14px;
+            background: var(--bg-dark);
+            border: 3px solid var(--accent);
+            border-radius: 50%;
+        }
+
+        .cert-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .cert-item {
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-left: 3px solid var(--secondary);
+            border-radius: 0 8px 8px 0;
+            transition: 0.3s;
+        }
+        .cert-item:hover { background: rgba(255,255,255,0.05); }
+        .cert-item h4 { color: var(--text-main); margin-bottom: 5px; }
+        .cert-item span { color: var(--text-muted); font-size: 0.85rem; display: block; }
+
+        #project-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 40px 0;
+        }
+
+        .modal-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            font-size: 2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            z-index: 2001;
+            transition: 0.3s;
+        }
+        .close-btn:hover { color: var(--accent); transform: rotate(90deg); }
+
+        .modal-header h2 { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; }
+        .modal-header .subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; }
+
+        .modal-body h3 { color: var(--text-main); margin: 30px 0 15px; font-size: 1.4rem; border-left: 4px solid var(--secondary); padding-left: 15px; }
+        .modal-body ul { list-style: none; padding: 0; }
+        .modal-body li { margin-bottom: 10px; color: var(--text-muted); padding-left: 20px; position: relative; }
+        .modal-body li::before { content: '>'; color: var(--accent); position: absolute; left: 0; }
+
+        footer {
+            background: #05070a;
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .hidden { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .show { opacity: 1; transform: translateY(0); }
+        @keyframes blink { 50% { border-color: transparent; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .timeline::before { left: -10px; }
+            .timeline-item { padding-left: 15px; }
+            .modal-header h2 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-bg"></canvas>
+
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">&lt;Rishopika /&gt;</div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#experience">Experience</a>
+                <a href="#projects">Projects</a>
+                <a href="#certifications">Awards & Certs</a>
+                <a href="#leadership">Leadership</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero" id="about">
+        <div class="container hero-content">
+            <h1>Rishopika Seyaruban</h1>
+            <h2>I am a <span class="typewriter" id="typing-text"></span></h2>
+            <p style="color:var(--text-muted); margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                Computer Engineering Undergraduate specializing in AI/ML, IoT, and Cybersecurity.
+                Turning data into intelligence and code into solutions.
+            </p>
+            <div class="btn-group">
+                <a href="mailto:e20371@eng.pdn.ac.lk" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Contact Me
+                </a>
+                <a href="https://www.linkedin.com/in/rishopika-seyaruban-66183b27b/" target="_blank" class="btn btn-outline">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title hidden">Experience</h2>
+            <div class="timeline">
+                
+                <div class="timeline-item hidden">
+                    <h3>Data Science Intern</h3>
+                    <span style="color:var(--accent); font-size:0.9rem;">LEARN | Sep 2025 - Dec 2025</span>
+                    <p style="margin-top:10px; color:var(--text-muted);">
+                        Collaborated on the AGM web page design and developed a Smart Attendance system. Applied Python, Pandas, Scikit-learn, and Data Visualization techniques to real-world data problems.
+                    </p>
+                </div>
+
+                <div class="timeline-item hidden">
+                    <h3>Teaching Assistant (Arduino & Python)</h3>
+                    <span style="color:var(--accent); font-size:0.9rem;">ACES & University of Peradeniya | Jul 2024 - Present</span>
+                    <p style="margin-top:10px; color:var(--text-muted);">
+                        Mentoring junior batches (E22, E21) in Python programming (CO1010, GP114) and Arduino-based projects. Responsibilities include conducting lab sessions, grading assignments, and providing technical guidance.
+                    </p>
+                </div>
+
+                <div class="timeline-item hidden">
+                    <h3>ComNect Article Writer</h3>
+                    <span style="color:var(--accent); font-size:0.9rem;">IEEE Computer Society KDU | Aug 2025 - Present</span>
+                    <p style="margin-top:10px; color:var(--text-muted);">
+                        Writing articles exploring telecommunications, science, and technology.
+                    </p>
+                </div>
+
+                <div class="timeline-item hidden">
+                    <h3>Sports Captain & Senior Prefect</h3>
+                    <span style="color:var(--accent); font-size:0.9rem;">Vavuniya Rambaikulam Girls' Maha Vidyalayam | 2017 - 2019</span>
+                    <p style="margin-top:10px; color:var(--text-muted);">
+                        Led school sports teams, managed student discipline, and coordinated prefect duties. Awarded Best Student of the Year (2019).
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="container">
+            <h2 class="section-title hidden">Projects</h2>
+            <p style="text-align:center; color:var(--text-muted); margin-bottom:30px;" class="hidden">Click on a project to view full details and contributions.</p>
+            <div class="grid">
+
+                <div class="card hidden" onclick="openModal('telemed')">
+                    <div class="card-header">
+                        <h3>TeleMED - AI Medical Chatbot</h3>
+                        <span class="role">Medical Consultation Platform</span>
+                    </div>
+                    <p>Building a medical consultation platform with AI summarization and Gemini-based chatbot integration.</p>
+                    <div class="tags">
+                        <span class="tag">MERN Stack</span>
+                        <span class="tag">Gemini API</span>
+                        <span class="tag">Django</span>
+                        <span class="tag">NLP</span>
+                    </div>
+                </div>
+
+                <div class="card hidden" onclick="openModal('audio')">
+                    <div class="card-header">
+                        <h3>Adversarial Audio Event Detection</h3>
+                        <span class="role">Final Year Research</span>
+                    </div>
+                    <p>Developing lightweight transformer-based models for robust audio event detection in noisy environments.</p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">Transformers</span>
+                        <span class="tag">Research</span>
+                    </div>
+                </div>
+
+                <div class="card hidden" onclick="openModal('greenhouse')">
+                    <div class="card-header">
+                        <h3>Greenhouse Automation System</h3>
+                        <span class="role">IoT System</span>
+                    </div>
+                    <p>Designed and deployed a smart IoT system to monitor and control greenhouse conditions using ESP32.</p>
+                    <div class="tags">
+                        <span class="tag">ESP32</span>
+                        <span class="tag">React Native</span>
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">IoT</span>
+                    </div>
+                </div>
+
+                <div class="card hidden" onclick="openModal('handsignal')">
+                    <div class="card-header">
+                        <h3>Real-Time Hand Signal Recognition</h3>
+                        <span class="role">Computer Vision</span>
+                    </div>
+                    <p>Developed a computer vision system for real-time hand gesture classification using CNNs and OpenCV.</p>
+                    <div class="tags">
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">CNN</span>
+                        <span class="tag">TensorFlow</span>
+                        <span class="tag">Roboflow</span>
+                    </div>
+                </div>
+
+                <div class="card hidden" onclick="openModal('gasleak')">
+                    <div class="card-header">
+                        <h3>Gas Leakage Detection System</h3>
+                        <span class="role">Industrial Safety</span>
+                    </div>
+                    <p>IoT-based safety system for detecting gas leaks in industrial and domestic settings.</p>
+                    <div class="tags">
+                        <span class="tag">AWS</span>
+                        <span class="tag">IoT</span>
+                        <span class="tag">MERN</span>
+                    </div>
+                </div>
+
+                <div class="card hidden" onclick="openModal('mis')">
+                    <div class="card-header">
+                        <h3>Non-Academic Staff MIS</h3>
+                        <span class="role">Full Stack System</span>
+                    </div>
+                    <p>Built a full-stack management system for staff records, leave tracking, and notifications.</p>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" style="background: rgba(255,255,255,0.02);">
+        <div class="container">
+            <h2 class="section-title hidden">Certifications & Awards</h2>
+            
+            <h3 style="color:var(--text-main); margin-bottom: 20px;" class="hidden">Competitions & Awards</h3>
+            <div class="cert-container hidden" style="margin-bottom: 50px;">
+                <div class="cert-item">
+                    <h4>1st Place - ICPC Hackathon</h4>
+                    <span>Major Coding Competition</span>
+                </div>
+                <div class="cert-item">
+                    <h4>Best Proposal</h4>
+                    <span>KDU Research Proposal Competition</span>
+                </div>
+                <div class="cert-item">
+                    <h4>Best Student of the Year (2019)</h4>
+                    <span>Vavuniya Rambaikulam Girls' Maha Vidyalayam</span>
+                </div>
+                <div class="cert-item">
+                    <h4>Colors Winner (2019)</h4>
+                    <span>Extra Curricular Activities</span>
+                </div>
+            </div>
+
+            <h3 style="color:var(--text-main); margin-bottom: 20px;" class="hidden">Professional Certifications</h3>
+            <div class="cert-container hidden">
+                <div class="cert-item">
+                    <h4>Software Engineer</h4>
+                    <span>HackerRank (Aug 2025)</span>
+                </div>
+                <div class="cert-item">
+                    <h4>REST API</h4>
+                    <span>HackerRank (Aug 2025)</span>
+                </div>
+                <div class="cert-item">
+                    <h4>Foundations of Git</h4>
+                    <span>GitKraken (Sep 2024)</span>
+                </div>
+                <div class="cert-item">
+                    <h4>Python Developer</h4>
+                    <span>Sololearn (Jul 2024)</span>
+                </div>
+                <div class="cert-item">
+                    <h4>UniHack Blockchain</h4>
+                    <span>Coin Ceylon (Jul 2025)</span>
+                </div>
+                <div class="cert-item">
+                    <h4>UI/UX For Beginners</h4>
+                    <span>Great Learning (Jun 2024)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="leadership">
+        <div class="container">
+            <h2 class="section-title">Leadership & Volunteering</h2>
+            
+            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Editor</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">Hackers' Club, UoP</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Jan 2025 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Editor</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">SEDS Pera</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Nov 2024 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Batch Coordinator</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">MPlus Society, UoP</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Oct 2023 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Web & Media Coordinator</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">MARC - UoP</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Jun 2025 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Member</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">IEEE WIE Affinity Group</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Mar 2025 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Web Content Manager</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">AeroGenz - Peradeniya</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">May 2025 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">ComNect Article Writer</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">IEEE Computer Society KDU</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Aug 2025 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Teaching Assistant (Arduino)</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">ACES - UoP</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Aug 2024 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Content Writer</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">ACES Newsletter '25</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">May 2025 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Editorial Article Writer</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">SEDS Pera</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Aug 2024 - Nov 2024</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Student Volunteer</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">Yarl IT Hub</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Sep 2024 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Volunteer (Nenathambara)</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">University of Peradeniya</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Jan 2024 - Present</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Volunteer (Organizing)</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">ACES Alumni (Coders v11.0)</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Oct 2024</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Social Media Writer</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">Rotaract Club Peradeniya</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Jun 2022 - Sep 2023</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Member</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">Mech Tamil Volunteer Society</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Dec 2022 - Jan 2024</span>
+                </div>
+
+                <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Member</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">Gavel Club - UoP</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">Jun 2022 - Dec 2023</span>
+                </div>
+
+                 <div class="card" style="padding: 20px; min-height: auto;">
+                    <h4 style="color: #fff; margin-bottom: 5px;">Member</h4>
+                    <span class="mono" style="color: var(--accent); font-size: 0.8rem;">AeroGenz Peradeniya</span>
+                    <span style="display:block; font-size: 0.75rem; color: var(--text-muted); margin-top:5px;">General Member</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        position: relative; 
+        z-index: 10;
+        <div class="container">
+            <h2 style="color:white; margin-bottom: 20px;">Let's Connect</h2>
+            <div style="font-size: 1.5rem; margin-bottom: 20px;">
+                <a href="https://www.linkedin.com/in/rishopika-seyaruban-66183b27b/" target="_blank" style="margin: 0 15px;"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/rishopiiis" target="_blank" style="margin: 0 15px;"><i class="fab fa-github"></i></a>
+                <a href="https://www.thecn.com/ES1380" target="_blank" style="margin: 0 15px;"><i class="fas fa-globe"></i></a>
+                <a href="mailto:e20371@eng.pdn.ac.lk" style="margin: 0 15px;"><i class="fas fa-envelope"></i></a>
+
+            </div>
+            <p style="color: var(--text-muted);">Rishopika Seyaruban &copy; 2026</p>
+            <p>TP: +94742332291</p>
+            <p style="font-size: 0.8rem; color: #64748b; margin-top: 5px;">271/1, 1st Lane, Ukkulankulam, Vavuniya, Sri Lanka</p>
+        </div>
+    </footer>
+
+    <div id="project-modal">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Project Title</h2>
+                <div class="subtitle" id="modal-role">Project Role</div>
+            </div>
+            <div class="modal-body" id="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        const projects = {
+            telemed: {
+                title: "TeleMED - AI Medical Chatbot",
+                role: "Full Stack Developer & AI Integrator",
+                content: `
+                    <h3>Project Description</h3>
+                    <p>TeleMED is a medical consultation platform designed to bridge the gap between patients and healthcare advice. It features an integrated AI chatbot capable of summarization and providing preliminary medical info using the Gemini API.</p>
+                    <h3>My Contributions</h3>
+                    <ul>
+                        <li>Initiated the project using Python and Django for the backend architecture.</li>
+                        <li>Migrated and expanded the frontend using the MERN stack (MongoDB, Express, React, Node.js).</li>
+                        <li>Integrated the Gemini API (Free Tier) to power the medical chatbot and NLP summarization features.</li>
+                        <li>Managed GitHub repository and deployment workflows.</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <p>Django, React, Node.js, Gemini API, MongoDB, Python.</p>
+                `
+            },
+            audio: {
+                title: "Adversarial & Noise-Robust Audio Event Detection",
+                role: "Researcher (Final Year Project)",
+                content: `
+                    <h3>Project Description</h3>
+                    <p>A research-intensive project focusing on developing lightweight transformer-based models for Audio Event Detection (AED). The goal is to create models that perform robustly in noisy environments and are efficient enough for edge deployment.</p>
+                    <h3>My Contributions</h3>
+                    <ul>
+                        <li>Conducting Exploratory Data Analysis (EDA) on raw audio datasets.</li>
+                        <li>Developing and training transformer models using TensorFlow.</li>
+                        <li>Implementing adversarial training techniques to improve noise robustness.</li>
+                        <li>Focusing on cross-dataset generalization to ensure the model works in varied real-world conditions.</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <p>Python, TensorFlow, Transformer Models, Machine Learning.</p>
+                `
+            },
+            greenhouse: {
+                title: "Greenhouse Automation System",
+                role: "IoT Engineer & App Developer",
+                content: `
+                    <h3>Project Description</h3>
+                    <p>Designed and put into place a smart system to monitor and regulate greenhouse environmental parameters (temp, humidity, soil moisture) to maximize plant development.</p>
+                    <h3>My Contributions</h3>
+                    <ul>
+                        <li>Designed the CAD for the custom sensor control board.</li>
+                        <li>Programmed the ESP32 microcontroller to process real-time sensor data.</li>
+                        <li>Integrated relays to control water pumps, fans, and LED lights automatically.</li>
+                        <li>Developed a React Native mobile app for remote monitoring and control.</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <p>ESP32, React Native, Spring Boot, IoT Sensors, CAD.</p>
+                `
+            },
+            handsignal: {
+                title: "Real-Time Hand Signal Recognition",
+                role: "Computer Vision Developer",
+                content: `
+                    <h3>Project Description</h3>
+                    <p>A computer vision system for real-time hand gesture classification using CNNs. Useful for sign language interpretation and gesture-based control.</p>
+                    <h3>My Contributions</h3>
+                    <ul>
+                        <li>Trained a custom CNN model using Roboflow.</li>
+                        <li>Used OpenCV for processing live webcam feeds.</li>
+                        <li>Optimized the model for high-speed recognition with live feedback.</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <p>Python, OpenCV, TensorFlow/Keras, Roboflow, CNN.</p>
+                `
+            },
+            gasleak: {
+                title: "Gas Leakage Detection System",
+                role: "IoT Developer",
+                content: `
+                    <h3>Project Description</h3>
+                    <p>An IoT-based safety system designed to detect gas leakages in industrial and domestic settings to reduce chemical damage risks.</p>
+                    <h3>My Contributions</h3>
+                    <ul>
+                        <li>Implemented sensor integration for gas detection.</li>
+                        <li>Connected the system to the cloud using AWS for real-time alerts.</li>
+                        <li>Utilized MERN stack for the dashboard interface.</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <p>MERN Stack, AWS, IoT, Sensor Integration.</p>
+                `
+            },
+            mis: {
+                title: "MIS for Non-Academic Staff",
+                role: "Full Stack Developer",
+                content: `
+                    <h3>Project Description</h3>
+                    <p>A web-based Management Information System tailored for university non-academic staff to streamline data entry, leave tracking, and records.</p>
+                    <h3>My Contributions</h3>
+                    <ul>
+                        <li>Designed the MySQL database schema for staff records.</li>
+                        <li>Built the backend with Spring Boot and frontend with React.</li>
+                        <li>Created a user-friendly UI for automated leave tracking and notifications.</li>
+                    </ul>
+                    <h3>Technologies</h3>
+                    <p>React, Spring Boot, MySQL, UI/UX Design.</p>
+                `
+            }
+        };
+
+        function openModal(projectId) {
+            const modal = document.getElementById('project-modal');
+            const data = projects[projectId];
+            if(data) {
+                document.getElementById('modal-title').innerText = data.title;
+                document.getElementById('modal-role').innerText = data.role;
+                document.getElementById('modal-body').innerHTML = data.content;
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('project-modal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('project-modal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        const textElement = document.getElementById('typing-text');
+        const roles = ["Computer Engineer", "AI/ML Enthusiast", "IoT Developer", "Cybersecurity Learner"];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function type() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                textElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                textElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+            if (!isDeleting && charIndex === currentRole.length) {
+                isDeleting = true;
+                setTimeout(type, 2000);
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                setTimeout(type, 500);
+            } else {
+                setTimeout(type, isDeleting ? 100 : 150);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', type);
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+        document.querySelectorAll('.hidden').forEach((el) => observer.observe(el));
+
+        const canvas = document.getElementById('canvas-bg');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray;
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = (Math.random() * 1.5) - 0.75;
+                this.speedY = (Math.random() * 1.5) - 0.75;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width || this.x < 0) this.speedX = -this.speedX;
+                if (this.y > canvas.height || this.y < 0) this.speedY = -this.speedY;
+            }
+            draw() {
+                ctx.fillStyle = '#00d4ff';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+            connect();
+            requestAnimationFrame(animate);
+        }
+
+        function connect() {
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) + 
+                                   ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width/7) * (canvas.height/7)) {
+                        ctx.strokeStyle = 'rgba(0, 212, 255, 0.1)';
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
