@@ -1,0 +1,252 @@
+%-------------------------
+% Resume in LaTeX
+% Author : Rishopika Seyaruban
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{xcolor}
+\usepackage{fontawesome5} % for GitHub, LinkedIn, etc.
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\justifying
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-6pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule\vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{#2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+% Fixed: #2 can be any content (text or icon)
+\newcommand{\resumeProjectHeading}[3]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small\textbf{#1} #2 & \textbf{#3} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge \scshape Rishopika Seyaruban} \\ \vspace{5pt}
+    \small \faPhone\ \href{tel:+94742332291}{+94 74 233 2291} $|$ 
+    \href{mailto:e20371@eng.pdn.ac.lk}{\faEnvelope\ e20371@eng.pdn.ac.lk} \\
+    \href{https://www.linkedin.com/in/rishopikaseyaruban/}{\faLinkedin\ linkedin.com/in/rishopika-seyaruban} $|$
+    \href{https://rishopika.github.io/portfolio/}{\faGlobe\ rishopika.github.io/portfolio} \\
+    \small \faMapMarker\ 271/1, 1st Lane, Ukkulankulam, Vavuniya, Sri Lanka
+\end{center}
+
+%----------SUMMARY----------
+\section{Summary}
+Computer Engineering undergraduate at University of Peradeniya specializing in AI/ML, IoT, and Cybersecurity. Experienced in full-stack development, transformer-based models, and IoT systems. Passionate about turning data into intelligence and code into solutions. Proven track record in research, hackathon competitions, and technical leadership roles.
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Data Science Intern}{Sep 2025 -- Dec 2025}
+      {LEARN}{Sri Lanka}
+      \resumeItemListStart
+        \resumeItem{Designed and developed AGM web page with modern UI/UX principles and responsive design}
+        \resumeItem{Built Smart Attendance System using Python, Pandas for data processing and Scikit-learn for ML model}
+        \resumeItem{Implemented data visualization dashboards for attendance analytics and reporting}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Teaching Assistant – Python \& Arduino}{Jul 2024 -- Present}
+      {ACES \& University of Peradeniya}{Peradeniya, Sri Lanka}
+      \resumeItemListStart
+        \resumeItem{Mentoring junior batches (E22, E21) in Python programming (CO1010, GP114) through lab sessions and workshops}
+        \resumeItem{Guiding students on Arduino-based IoT projects including sensor integration and embedded systems}
+        \resumeItem{Conducting technical sessions, grading assignments, and providing one-on-one technical guidance}
+        \resumeItem{Conducting Workshops on Arduino and Evaluating}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Sports Captain \& Senior Prefect}{2017 -- 2019}
+      {Vavuniya Rambaikulam Girls' Maha Vidyalayam}{Vavuniya, Sri Lanka}
+      \resumeItemListStart
+        \resumeItem{Led school sports teams, managed student discipline, and coordinated prefect duties}
+        \resumeItem{Awarded Best Student of the Year (2019) and Colors Winner (2019)}
+        \resumeItem{Junior inventory manager - Annual inspection}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \resumeSubHeadingListStart
+  
+    \resumeProjectHeading
+        {Adversarial \& Noise-Robust Audio Event Detection (Final Year Research)}
+        {\href{https://github.com/yourusername/audio-detection}{\faGithub\small}}
+        {Aug 2025 -- Present}
+        \resumeItemListStart
+          \resumeItem{Developing lightweight transformer-based models for robust audio event detection in noisy real-world environments}
+          \resumeItem{Implemented custom EDA pipeline to process and augment raw audio datasets for improved model training}
+          \resumeItem{Designed adversarial training techniques to enhance model robustness against environmental noise and attacks}
+          \resumeItem{Optimizing model architecture for edge deployment with focus on cross-dataset generalization}
+          \resumeItem{Technologies: Python, TensorFlow, Transformer Models, Audio Processing, Machine Learning}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {TeleMED – AI-Powered Medical Chatbot}
+        {\href{https://github.com/rishopiiis/TeleMED.git}{\faGithub\small}}
+        {Sep 2025 -- Present}
+        \resumeItemListStart
+          \resumeItem{Building full-stack medical consultation platform integrating Gemini API for intelligent health query responses}
+          \resumeItem{Developed Django REST API backend for secure patient data management and consultation history}
+          \resumeItem{Created responsive MERN stack frontend with real-time chat interface and AI summarization features}
+          \resumeItem{Implemented MongoDB database schema for storing medical records, chat logs, and user authentication}
+          \resumeItem{Technologies: Python, Django, React, Node.js, Express, MongoDB, Gemini API, NLP, RESTful APIs}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {Greenhouse Automation System}
+        {\href{https://github.com/rishopiiis/e20-3yp-Green-House-Automation.git}{\faGithub\small}}
+        {Dec 2024 -- Jul 2025}
+        \resumeItemListStart
+          \resumeItem{Designed and deployed complete IoT solution for automated greenhouse environmental monitoring and control}
+          \resumeItem{Integrated ESP32 microcontroller with DHT22 (temperature/humidity) and soil moisture sensors for real-time data}
+          \resumeItem{Developed React Native mobile application enabling remote monitoring and manual/automated irrigation control}
+          \resumeItem{Built Spring Boot backend API for sensor data processing, storage, and automated threshold-based alerts}
+          \resumeItem{Technologies: ESP32, React Native, Spring Boot, IoT Protocols (MQTT), Sensor Integration}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {Real-Time Hand Signal Recognition}
+        {\href{https://github.com/rishopiiis/Sign-Language-Recognition.git}{\faGithub\small}}
+        {Dec 2024 -- Mar 2025}
+        \resumeItemListStart
+          \resumeItem{Developed computer vision system for real-time hand gesture classification to assist communication accessibility}
+          \resumeItem{Collected and annotated custom dataset of 5000+ hand gesture images across 10 sign language gestures}
+          \resumeItem{Trained custom CNN model achieving 94\% accuracy using transfer learning with MobileNetV2 architecture}
+          \resumeItem{Deployed model via Roboflow and implemented OpenCV pipeline for live webcam feed gesture recognition}
+          \resumeItem{Technologies: Python, OpenCV, TensorFlow, Keras, Roboflow, CNN, Transfer Learning}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {Gas Leakage Detection System}
+        {\href{https://github.com/rishopiiis/Gas_Leakage_Mobile_App.git}{\faGithub\small}}
+        {Sep 2025 -- Oct 2025}
+        \resumeItemListStart
+          \resumeItem{Engineered IoT-based safety system for detecting hazardous gas leaks in industrial and domestic environments}
+          \resumeItem{Integrated MQ-2 gas sensors with ESP32 for continuous monitoring and threshold-based alert triggering}
+          \resumeItem{Built full-stack MERN application with real-time dashboard displaying sensor readings and alert history}
+          \resumeItem{Deployed backend on AWS EC2 with MongoDB Atlas for cloud-based data storage and notifications}
+          \resumeItem{Presented at Faculty of Engineering 75th Jubilee Exhibition EngEX \& TECHNO - 2025}
+          \resumeItem{Technologies: MongoDB, Express.js, React, Node.js, AWS EC2, IoT Sensors, Real-time WebSockets}
+        \resumeItemListEnd
+
+    \resumeProjectHeading
+        {MIS for Non-Academic Staff – University of Peradeniya}
+        {\href{https://github.com/rishopiiis/Non-academic-staff-BackEnd.git}{\faGithub\small}}
+        {Apr 2024 -- Nov 2024}
+        \resumeItemListStart
+          \resumeItem{Developed comprehensive management information system for non-academic staff at University of Peradeniya}
+          \resumeItem{Built React frontend with role-based dashboards for staff, managers, and administrators}
+          \resumeItem{Designed Spring Boot REST API backend with JWT authentication and authorization}
+          \resumeItem{Implemented MySQL database with normalized schema for employee records, leave management, and payroll}
+          \resumeItem{Technologies: React, Spring Boot, MySQL, JWT Authentication, RESTful APIs, UI/UX Design}
+        \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------TECHNICAL SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: Python, C, Java, JavaScript, SQL, HTML/CSS} \\
+     \textbf{Frameworks \& Libraries}{: React, Spring Boot, Node.js, Django, TensorFlow, PyTorch, OpenCV, NumPy, Pandas, Scikit-learn, PyQt5} \\
+     \textbf{Tools \& Platforms}{: Git, Docker, AWS, Arduino, ESP32, Roboflow, MySQL, MongoDB, PyInstaller} \\
+     \textbf{Cybersecurity}{: Wireshark, Nmap, Metasploit, Burp Suite, OWASP Top 10, Network Security, Cryptography}
+    }}
+ \end{itemize}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {University of Peradeniya}{2022 -- Present}
+      {Bachelor of Engineering in Computer Engineering | GPA: 3.235/4.0}{Peradeniya, Sri Lanka}
+    
+    \resumeSubheading
+      {Vavuniya Rambaikulam Girls' Maha Vidyalayam}{2011 -- 2019}
+      {G.C.E. A/L: 2A 1B (Physical Science) | G.C.E. O/L: 9A}{Vavuniya, Sri Lanka}
+  \resumeSubHeadingListEnd
+
+%-----------ACHIEVEMENTS-----------
+\section{Achievements \& Awards}
+  \resumeSubHeadingListStart
+    \resumeItem{\textbf{1st Place} - ICPC Hackathon (Major Coding Competition)}
+    \resumeItem{\textbf{Best Proposal} - KDU Research Proposal Competition}
+    \resumeItem{\textbf{Best Student of the Year (2019)} - Vavuniya Rambaikulam Girls' Maha Vidyalayam}
+    \resumeItem{\textbf{Colors Winner (2019)} - Extra Curricular Activities Recognition}
+    \resumeItem{Presented Gas Leakage Detection System at Faculty of Engineering 75th Jubilee Exhibition EngEX \& TECHNO - 2025}
+    \resumeItem{Qualifying Certificate - International Astronomy and Astrophysics Competition (Jul 2025)}
+    \resumeItem{Volunteer of the Month - SEDS Pera (Oct 2024 \& Nov 2024)}
+  \resumeSubHeadingListEnd
+
+%-----------REFERENCES-----------
+\section{References}
+  \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}l}
+    \textbf{Prof. Roshn G. Ragel} & \textbf{Dr. Upul Jayasinghe} \\
+     Professor, Faculty of Engineering & Senior Lecturer, Faculty of Engineering \\
+    University of Peradeniya & University of Peradeniya \\
+    \href{mailto:roshanr@eng.pdn.ac.lk}{roshanr@eng.pdn.ac.lk | +94 77 385 7755 } & \href {mailto:upuljm@eng.pdn.ac.lk}{upuljm@eng.pdn.ac.lk} | +94 78 041 6590\\
+  \end{tabular*}
+
+\end{document}
